@@ -1,0 +1,120 @@
+***** Dépendances *****
+
+Installation de l'extension VSCode "Truffle for VS Code"
+
+-   Node Version Manager : permet de gerer plusieurs version de Node.js sur la meme machine
+    nvm 0.39.0
+-   Node.js : Environnement d'éxecution JavaScript coté serveur. Truffle, Ganache et les outils de développement s'appuient dessus
+    node LTS version v16.14.0 => nvm use node v16.14.0
+-   Node Package Manager : permet d'installer les dépendances (Truffle, Ganache CLI, HDWalletProvider, etc.)
+    npm v8.3.1
+-   git
+-   > npm i -g truffle : Framework de développement pour les smart contract EVM
+    > npm i -g ganache : Noeud Ethereum local (comme Alchemy mais tournant en local)
+
+
+***** Commandes *****
+
+nvm ls-remote --lts : lister les versions LTS disponible via nvm
+
+npm init -y : Créer un projet Node.js
+npm install truffle@5.11.5 : installer une version de truffle propre au projet 
+npm install ganache@7.9.1 : installer une version de ganache propre au projet 
+
+truffle init : initialise un projet truffle
+truflle compile : compile les smart-contracts
+
+npm install @openzeppelin/contracts
+npm install --save-dev chai-bn
+npm install --save-dev chai-as-promised
+
+rappel :
+package.json est la liste des dépendances du projet 
+package-lock.json précise la version de chacune des dépendances
+node_modules/ contient les librairies installées via npm. npm install permet a n'import qui de réinstaller ces bibliothèques sur une autre machine
+
+
+***** Tests *****
+
+Pour lancer les tests, on utilise la commande truffle test
+On a besoin d'avoir lancé une blockchain local en parallèle. On peu utiliser ganache avec npx ganache, "truffle migrate --network development" (se connecter a un réseau defini dans config), ou truffle develop (interne a truffle)
+Truffle utilise Mocha (Framework de test JS) + Chai (librairie d'assertion)
+On utilise ici :
+    - contract() équivalent de describe() pour regrouper des tests
+    - it() pour chaque scenario de test
+    - fonction async/await puisque la blockchain est asynchrone
+    - assert ou expect pour verifier les tests
+Pour verifier les assertions, on privilie expect qui est plus recommandé pour les tests modernes de par sa fluidité de lecture
+
+artifacts est comme un import mais pour charger un contrat compilé avec son ABI
+accounts est une liste d'accounts fournit par truffle
+
+Truffle offre la fonction context pour séparer des groupes de tests propres a des situations précises
+Truffle offre une instance de web3 qui permet des appels a un rpc comme par exemple web3.eth.getBalance
+x peut etre placé devant context ou it pour que Truffle ne prenne pas en compte ce test
+
+Les nombres lors de test sont exprimés de manière différent : uint256 en Solidity. Comme en Javascript uint256
+n'existe pas on utilise des objets JavaScript BN pour éviter les erreurs de précisions que JavaScript introduirait
+avec ses Number classiques. 
+Un BN est un BigNumber - une représentation d’un nombre entier très grand
+Pour comparer des big numbers il faut installer le plugin chain-bn ou chai-bigint
+Truffle installe comme dépendance mocha(Framework de test), chai(librairies d'assertions), web3(librairie js pour interagir avec Ethereum)
+Il n'installe pas chai-bn(BigNumber), test-helpers de openzeppelin (utils pour les tests)
+Des lors que le plugin est installé, on peut importer dans les fichiers de tests concerné ce dont on a besoin
+
+On a besoin d'un plugin comme chai-as-promised pour tester les reverts 
+On pourrait cependant tester via des try and catch mais c'est moins propre
+
+
+***** JS rappel *****
+
+Declarer une function simple function nom() { ... }
+Déclarer une function fléché const f = (x) => x * 2;
+Gérer une promesse const result = await appelAsync();
+Test fucntion dans Mocha it('description', async function() { ... });
+
+
+***** Questions *****
+
+***** Astuces *****
+Pour éviter d'engorger le réseau avec enormément d'instance d'un smart contract on peut utiliser selfdestruct en prévoyant une fonction dans le smart contract 
+destiné a kill une instance lorsqu'elle n'est plus nécéssaire
+
+
+***** Solidity *****
+
+address, uint256 sont des types simples, on les passe par valeur en Solidity
+bytes est un type complexe, on doit spécifier au compilateur ou sont stockées ces données
+En Solidity, calldata est utilisé pour recevoir des données externes et les stockées en dehors du contrat donc pas modifiables et moins cher a lire
+
+Un modifier est utilisé pour faire une verification avant l'execution de la fonction
+Le Merge Wildcard (_;) placé après effectue le check avant l'executon de la function et inversement
+
+Une function view ne modifie rien mais accède a des données du contrat. Une function pure ne modifie ni n'accède a rien sur le contrat.
+Pour la gestion d'erreur en Solidity on utilise require ou revert.
+
+storage est le stockage sur la blockchain, c'est l'etat du contrat, et le plus cher en terme de gas
+memory, c'est comme la RAM c'est de la mémoire temporaire, un peu cher en gas car copie de la valeur mais moins cher que de stocker dans le storage
+calldata ne stocke pas la donnée, elle est attachée a l'appel, c'est donc le moins cher
+
+En solidity, call est une fonction bas niveau qui permet :
+- d'appeler n'importe quel contrat
+- lui envoyé de l'ether eventuellement
+- lui transmettre des données encodées (function + argument)
+
+Pour appeler une function en bas niveau (avec call par exemple), il faut encodé la function et ses arguments
+Pour cela, on a 2 methodes :
+    - On passe par l'abi qu'on recupère grace a artifacts
+      On doit obtenir d'une interface qui est juste un descripeur de fonction (ex avec Web.js new web3.eth.Contract(MonContrat.abi); )
+      Puis grace a cette interface on encode (ex avec Web3.js face.methods.maFonction(arg1, arg2).encodeABI(); )
+    - On passe par une instance du contrat directement
+        (ex avec Web3.js contractinstanceWeb3.methods.treansfer(args).encodeABI(); )
+
+
+***** A Faire *****
+- Documenter documentation/ avec whitepaper
+- Deploiement des smart contracts. MultiSig contract, Token42 contract
+- Script qui prouve les fonctionnalités (quel langage, librairires web3)
+- Penser au site vitrine et preuve de MultiSig ?? 
+- Publier le ticker du token sur un blockchain explorer
+- Finir README
