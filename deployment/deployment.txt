@@ -28,6 +28,12 @@ npm install @openzeppelin/contracts
 npm install --save-dev chai-bn
 npm install --save-dev chai-as-promised
 
+npm install @truffle/hdwallet-provider
+npm install dotenv
+
+truffle migrate --f 3 --to 3  --network bscTestnet [ deployer uniquement la 3e migrations ]
+
+
 rappel :
 package.json est la liste des dépendances du projet 
 package-lock.json précise la version de chacune des dépendances
@@ -111,9 +117,24 @@ Pour cela, on a 2 methodes :
         (ex avec Web3.js contractinstanceWeb3.methods.treansfer(args).encodeABI(); )
 
 
+***** Deploiement *****
+Le déploiement nécessite une compilation effectué avec "truffle comiple"
+Le dossier migrations/ créer lors du "truffle init" contient les instructions de deploiement des smart contract
+Pour creer un fichier de migrations pour un smart contract peux utiliser "truffle create migration MyContract"
+Pour deployer le contrat on utilise ensuite "truffle migrate" qui utilisera les fichiers de Migrations pour deployer les contrats
+
+Avant de pouvoir déployer sur le tesnet de la BSC (ou un autre réseau) il faut ajouter ce réseau a truffle-config
+Pour pouvoir ajouter un réseau, il faut pouvoir se connecter a un noeud (j'utilise Alchemy)
+Les 2 options de noeuds sont :
+- les noeud public par exemple proposé par Binance mais ces noeuds peuvent être instables
+- utiliser HDWalletProvider (méthode recommandé) qui permet de se connecter a un noeud distant sécurisé (type Infura, Alchemy ...)
+Pour utiliser ce noeud, il faut installer hdwallet-provider et dotenv pour proteger les données sensibles dans le code
+Pour la configuration d'un réseau, on peut spécifier soit host/port soit provider mais pas les 2.
+Pour s'assurer qu'un seul réseau est connecté a la fois, il faut set le provider comme une fucntion 
+
 ***** A Faire *****
-- Documenter documentation/ avec whitepaper
-- Deploiement des smart contracts. MultiSig contract, Token42 contract
+- Documenter documentation/ avec whitepaper [ À FINALISER ]
+- Deploiement des smart contracts. MultiSig contract, Token42 contract + Documenter 
 - Script qui prouve les fonctionnalités (quel langage, librairires web3)
 - Penser au site vitrine et preuve de MultiSig ?? 
 - Publier le ticker du token sur un blockchain explorer

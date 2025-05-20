@@ -229,7 +229,7 @@ contract('MultiSigWallet', (accounts) => {
             const contractToken = await Token42.new("Test42", "TST");
             let totalSupply = await contractToken.totalSupply();
             let account1Balance = await contractToken.balanceOf(accounts[1]);
-            expect(totalSupply.toString()).to.equal("100000000");
+            expect(totalSupply.toString()).to.equal("100000000000");
             expect(account1Balance.toString()).to.equal("0");
             
             // Set multiSig contract to call mint function
@@ -245,7 +245,7 @@ contract('MultiSigWallet', (accounts) => {
             
             totalSupply = await contractToken.totalSupply();
             account1Balance = await contractToken.balanceOf(accounts[1]);
-            expect(totalSupply.toString()).to.equal("100000010");
+            expect(totalSupply.toString()).to.equal("100000000010");
             expect(account1Balance.toString()).to.equal("10");
 
         });
@@ -279,7 +279,7 @@ contract('MultiSigWallet', (accounts) => {
             const contractToken = await Token42.new("Test42", "TST");
             let totalSupply = await contractToken.totalSupply();
             let account1Balance = await contractToken.balanceOf(accounts[1]);
-            expect(totalSupply.toString()).to.equal("100000000");
+            expect(totalSupply.toString()).to.equal("100000000000");
             expect(account1Balance.toString()).to.equal("0");
             
             const abi =  Token42.abi;
@@ -295,7 +295,7 @@ contract('MultiSigWallet', (accounts) => {
             const contractToken = await Token42.new("Test42", "TST");
             let totalSupply = await contractToken.totalSupply();
             let account1Balance = await contractToken.balanceOf(accounts[1]);
-            expect(totalSupply.toString()).to.equal("100000000");
+            expect(totalSupply.toString()).to.equal("100000000000");
             expect(account1Balance.toString()).to.equal("0");
             
             const abi =  Token42.abi;

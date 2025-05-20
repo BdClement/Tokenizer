@@ -38,11 +38,14 @@ https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP20.md
 Alchemy - explanation
 
 
+Token - explanation
 Le Token est un jeton éducatif destiné à simuler des cas d’usage standards de tokens BEP-20 dans un environnement sécurisé. Il permet de tester le mint, transfert, burn et distribution sans aucun enjeu monétaire. Sa seule utilité outre la démonstration éducative sera le système de fidélité. 
 Les utilisateurs de mon site en développement seront récompensés en fonction de certaines actions qu'ils font et pourront a terme avoir accès a des features”
 
-Smart contract address :
+Smart contract address : 
 Network used : BNB Smart Chain Testnet (ChainID 97, Currency tBNB)
+Token contract : 0x21eA36E6120eEcfd62569B2a7e0201350473Ea55
+
 
 Bonus
 A multisignature contract (or multisig) is a security mechanism that requires multiple signatures (validations) for a transaction or critical action to be executed on the blockchain.
@@ -51,4 +54,6 @@ Gnosis Safe, Argent Wallet or OpenZepellin MultiSig are main available solutions
 
 I choose to create a MultiSig contract that is extensible for multiple used case. That's the reason why I added receive and fallback funciton so that my contract can receive ETH or BNB to protect value. Thanks to these functions, the MultiSig contract can be used as a safe to lock value on it and use it only if preconfigured settings are filled.
 In my case, I protect the mint of my token to assure that minting token is a decision approved by enough actors of the token ecosystem.
+
+multiSig contract : 0xB4C3b9c2F27C1806EfAc3888658716738d6Ef5B4
 

@@ -36,7 +36,7 @@ contract('Token42', (accounts) => {
         });
         it("Should have correct totalSupply", async () => {
             const supply = await contractInstance.totalSupply();
-            expect(supply.toString()).to.equal("100000000");//convert in string type to compare
+            expect(supply.toString()).to.equal("100000000000");//convert in string type to compare
         });
         it("Should have correct decimals", async () => {
             const decimals = await contractInstance.decimals();
@@ -48,29 +48,29 @@ contract('Token42', (accounts) => {
     context("Allocation tests on deployment stage", () => {
         it("Team should have the correct initial allocation", async () => {
             const teamAllocation = await contractInstance.balanceOf(TEAM_ADDRESS);
-            expect(teamAllocation.toString()).to.equal("20000000");
+            expect(teamAllocation.toString()).to.equal("20000000000");
         });
         it("Airdrop wallet should have the correct initial allocation", async () => {
             const airdropAllocation = await contractInstance.balanceOf(AIRDROP_ADDRESS);
-            expect(airdropAllocation.toString()).to.equal("20000000");
+            expect(airdropAllocation.toString()).to.equal("20000000000");
         });
         it("Community should have the correct initial allocation", async () => {
             const communityAllocation = await contractInstance.balanceOf(COMMUNITY_ADDRESS);
-            expect(communityAllocation.toString()).to.equal("20000000");
+            expect(communityAllocation.toString()).to.equal("20000000000");
         });
         it("Owner should have the correct initial allocation", async () => {
             const ownerAllocation = await contractInstance.balanceOf(accounts[0]);
-            expect(ownerAllocation.toString()).to.equal("10000000");
+            expect(ownerAllocation.toString()).to.equal("10000000000");
         });
         it("Investors should have the correct initial allocation", async () => {
             const vestingContract = await contractInstance.vestingInvestors();
             const investorsAllocation = await contractInstance.balanceOf(vestingContract);
-            expect(investorsAllocation.toString()).to.equal("30000000");
+            expect(investorsAllocation.toString()).to.equal("30000000000");
         });
-        xit("should emit a Transfer event with _from set at address(0)", async () => {
+        it("should emit a Transfer event with _from set at address(0)", async () => {
             const logs = contractTx.logs;
-            console.log(logs);
-            // FINISH 
+            SignHashTransfer = await web3.utils.keccak256("Transfer(address,address,uint256)");
+            expect(logs[4].topics[0]).to.equal(SignHashTransfer);
         });
     });
 
@@ -114,38 +114,38 @@ contract('Token42', (accounts) => {
     context("Simple transfer feature tests", () => {
         it("should be possible and update balances", async() => {
             let balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("10000000")
+            expect(balanceOwner.toString()).to.equal("10000000000")
             let balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("0")
             
             await contractInstance.transfer(accounts[1], 5);
             
             balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("9999995");
+            expect(balanceOwner.toString()).to.equal("9999999995");
             balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("5")
         });
         it("should be possible to transfer a 0 amount", async () => {
             let balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("10000000")
+            expect(balanceOwner.toString()).to.equal("10000000000")
             let balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("0");
             
             await contractInstance.transfer(accounts[1], 0);
             
             balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("10000000")
+            expect(balanceOwner.toString()).to.equal("10000000000")
             balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("0")
         });
         it("shouldn't modify totalSupply", async () => {
             const initialSupply = await contractInstance.totalSupply();
-            expect(initialSupply.toString()).to.equal("100000000");
+            expect(initialSupply.toString()).to.equal("100000000000");
 
             await contractInstance.transfer(accounts[1], 5);
             
             const supplyAfterTransfer = await contractInstance.totalSupply();
-            expect(initialSupply.toString()).to.equal("100000000");
+            expect(supplyAfterTransfer.toString()).to.equal("100000000000");
         });
         it("should emit a Transfer Event", async () => {
             const resultTransfer = await contractInstance.transfer(accounts[1], 5);
@@ -161,7 +161,7 @@ contract('Token42', (accounts) => {
         });
         it("should revert a transfer when caller has insuficcient balance", async () => {
             await expectRevert(contractInstance.transfer(accounts[0], 10, {from: accounts[1]}), "Insuficcient balance");
-            await expectRevert(contractInstance.transfer(accounts[1], 10000001), "Insuficcient balance");
+            await expectRevert(contractInstance.transfer(accounts[1], 10000001000), "Insuficcient balance");
             await expectRevert(contractInstance.transfer(accounts[0], 1, {from: accounts[4]}), "Insuficcient balance");
         });
     });
@@ -169,7 +169,7 @@ contract('Token42', (accounts) => {
     context("Transfer with approval tests", () => {
         it("should be possible for caller who is allowed ans update balances", async () => {
             let balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("10000000")
+            expect(balanceOwner.toString()).to.equal("10000000000")
             let balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("0");
 
@@ -177,7 +177,7 @@ contract('Token42', (accounts) => {
             await contractInstance.transferFrom(accounts[0], accounts[1], 50, {from : accounts[1]});
             
             balanceOwner = await contractInstance.balanceOf(accounts[0]);
-            expect(balanceOwner.toString()).to.equal("9999950");
+            expect(balanceOwner.toString()).to.equal("9999999950");
             balanceAccount1 = await contractInstance.balanceOf(accounts[1]);
             expect(balanceAccount1.toString()).to.equal("50");
         });
@@ -266,8 +266,8 @@ contract('Token42', (accounts) => {
 
             const teambalance = await contractInstance.balanceOf(TEAM_ADDRESS);
             const totalSupply = await contractInstance.totalSupply();
-            expect(teambalance.toString()).to.equal("20000001");
-            expect(totalSupply.toString()).to.equal("100000001");
+            expect(teambalance.toString()).to.equal("20000000001");
+            expect(totalSupply.toString()).to.equal("100000000001");
         });
         it("should revert while attempting to mint while multiSig hasn't been set", async () => {
             await expectRevert(contractInstance.mint(TEAM_ADDRESS, 10), "Multisig not set");
@@ -278,7 +278,7 @@ contract('Token42', (accounts) => {
         });
         it("should revert while attempting mint to get supply greater than maxSupply", async () => {
             await contractInstance.setMultiSig(accounts[8]);
-            await expectRevert(contractInstance.mint(TEAM_ADDRESS, 1000000000, {from: accounts[8]}), "Impossible to mint. Total supply would exceed max supply");
+            await expectRevert(contractInstance.mint(TEAM_ADDRESS, 1000000000000, {from: accounts[8]}), "Impossible to mint. Total supply would exceed max supply");
         });
         it("should revert while minting to address(0)", async () => {
             await contractInstance.setMultiSig(accounts[8]);
@@ -296,8 +296,8 @@ contract('Token42', (accounts) => {
             await contractInstance.burn(10, {from: accounts[0]});
             const ownerBalance = await contractInstance.balanceOf(accounts[0]);
             const totalSupply = await contractInstance.totalSupply();
-            expect(ownerBalance.toString()).to.equal("9999990");
-            expect(totalSupply.toString()).to.equal("99999990");
+            expect(ownerBalance.toString()).to.equal("9999999990");
+            expect(totalSupply.toString()).to.equal("99999999990");
 
         });
         it("should revert while attempting to burn token", async () => {
@@ -349,7 +349,7 @@ contract('Token42', (accounts) => {
             await time.increase(time.duration.days(365 * 2));
             await vestingContract.release(tokenAddress);
             investorsBalance = await contractInstance.balanceOf(INVESTORS_ADDRESS);
-            expect(investorsBalance.toString()).to.equal("30000000");
+            expect(investorsBalance.toString()).to.equal("30000000000");
         });
         it("should emit BEP20Released event", async () => {
             const tokenAddress = contractInstance.address;

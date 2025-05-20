@@ -22,7 +22,7 @@ contract Token42 is MyOwnable {
     address public vestingInvestors;
 
     uint256 private _totalSupply;
-    uint256 private constant _maxSupply = 1_000_000_000;
+    uint256 private constant _maxSupply = 1_000_000_000 * 10 ** 3;
 
     string private _name;
     string private _symbol;
@@ -60,11 +60,11 @@ contract Token42 is MyOwnable {
         // cast for optimisation in VestingWallet
         vestingInvestors = address(new VestingToken(investorsWallet, uint64(block.timestamp), uint64(2 * 365 days)));
 
-        _mint(teamWallet, 20_000_000);
-        _mint(airdropWallet, 20_000_000);
-        _mint(communityWallet, 20_000_000);
-        _mint(msg.sender, 10_000_000);
-        _mint(address(vestingInvestors), 30_000_000);
+        _mint(teamWallet, 20_000_000 * 10 ** 3);
+        _mint(airdropWallet, 20_000_000 * 10 ** 3);
+        _mint(communityWallet, 20_000_000 * 10 ** 3);
+        _mint(msg.sender, 10_000_000 * 10 ** 3);
+        _mint(address(vestingInvestors), 30_000_000 * 10 ** 3);
 
         // Allow community and team to burn 
         addToGoldMembers(communityWallet);

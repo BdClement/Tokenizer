@@ -1,3 +1,8 @@
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+require('dotenv').config();// Pour utiliser un .env
+
+const private_key = process.env.PRIVATE_KEY;
+const endpoint_alchemy = process.env.ENDPOINT_ALCHEMY_TESTNET;
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -68,6 +73,19 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
+    },
+    bscTestnet: {
+      // host: , Soit host/port soit provider pour set un réseau
+      // port: ,
+      provider: () => {
+        return new HDWalletProvider([private_key], endpoint_alchemy);// Possibilité d'utiliser mnemonic et de choisir l'adresse associé
+      },
+      network_id: 97,
+      // gas : max gas for a tx
+      //gasPrice (wei)
+      //from address
+      //confirmations : block number after deploying to consider the deployment as finished
+
     },
     //
     // An additional network, but with some advanced options…
