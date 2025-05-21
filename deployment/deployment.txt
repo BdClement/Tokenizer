@@ -32,12 +32,17 @@ npm install @truffle/hdwallet-provider
 npm install dotenv
 
 truffle migrate --f 3 --to 3  --network bscTestnet [ deployer uniquement la 3e migrations ]
-
+ npx truffle exec scripts/interact.js --network bscTestnet
 
 rappel :
 package.json est la liste des dépendances du projet 
 package-lock.json précise la version de chacune des dépendances
 node_modules/ contient les librairies installées via npm. npm install permet a n'import qui de réinstaller ces bibliothèques sur une autre machine
+
+***** Librairie web3 *****
+
+Pour interagir avec la blockchain que ce soit dans mes tests ou mes scripts, j'utilise la librairie web3.js.
+Cette librairie est utilise par Truffle pour faciliter l'interaciton.
 
 
 ***** Tests *****
@@ -118,6 +123,7 @@ Pour cela, on a 2 methodes :
 
 
 ***** Deploiement *****
+
 Le déploiement nécessite une compilation effectué avec "truffle comiple"
 Le dossier migrations/ créer lors du "truffle init" contient les instructions de deploiement des smart contract
 Pour creer un fichier de migrations pour un smart contract peux utiliser "truffle create migration MyContract"
@@ -132,10 +138,22 @@ Pour utiliser ce noeud, il faut installer hdwallet-provider et dotenv pour prote
 Pour la configuration d'un réseau, on peut spécifier soit host/port soit provider mais pas les 2.
 Pour s'assurer qu'un seul réseau est connecté a la fois, il faut set le provider comme une fucntion 
 
+***** Script interagissant avec mes contrats *****
+
+Pour faire un scripts JavaScript qui interagit aves des contrats sur une blockchain publique
+J'ai fait ces scripts dans mon environnement Truffle qui favorise l'utilisation de web3 qui est deja configure avec HDWalletProvider
+Sinon il aurait fallu faire un script brut hors Truffle et construire des instances de web3 que Truffle gere deja 
+ou encore signe des transaction directement avec signTransaction() ou sendSignedTransaction()
+Truffle simplifie les appels de function avec par exemple await contractInstance.methodName(args, { from })
+la ou j'aurais fait en web3 natif await contractInstance.methods.methodName(args).send({ from })
+
+
+
+
 ***** A Faire *****
+
 - Documenter documentation/ avec whitepaper [ À FINALISER ]
 - Deploiement des smart contracts. MultiSig contract, Token42 contract + Documenter 
 - Script qui prouve les fonctionnalités (quel langage, librairires web3)
 - Penser au site vitrine et preuve de MultiSig ?? 
-- Publier le ticker du token sur un blockchain explorer
 - Finir README

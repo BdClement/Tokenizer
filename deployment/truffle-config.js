@@ -1,8 +1,11 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require('dotenv').config();// Pour utiliser un .env
 
-const private_key = process.env.PRIVATE_KEY;
+const owner_private_key = process.env.PRIVATE_KEY;
+const team_private_key = process.env.TEAM_PRIVATE_KEY;
 const endpoint_alchemy = process.env.ENDPOINT_ALCHEMY_TESTNET;
+
+console.log(endpoint_alchemy);
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -78,7 +81,7 @@ module.exports = {
       // host: , Soit host/port soit provider pour set un réseau
       // port: ,
       provider: () => {
-        return new HDWalletProvider([private_key], endpoint_alchemy);// Possibilité d'utiliser mnemonic et de choisir l'adresse associé
+        return new HDWalletProvider([owner_private_key, team_private_key], endpoint_alchemy);// Possibilité d'utiliser mnemonic et de choisir l'adresse associé
       },
       network_id: 97,
       // gas : max gas for a tx
