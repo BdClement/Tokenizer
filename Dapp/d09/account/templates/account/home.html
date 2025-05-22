@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Home Page</title>
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<div id="auth-info">
+    <div id="auth-connected" {% if not user.is_authenticated %}style="display:none"{% endif %}>
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+            <p id="auth-message">Logged as {{ user.username }}</p>
+            <button class="btn btn-outline-danger" id="logout-btn">Logout</button>
+        </div>
+    </div>
+    <div class="message-container" id="auth-errors" style="display:none"></div>
+    <div id="auth-form-display"{% if user.is_authenticated %}style="display:none"{% endif %}>
+        <form class="container d-flex flex-column justify-content-center align-items-center" id="auth-form" method="post" action="/login/">
+            {% for field in form %}
+                <div class="form-group mb-3">
+                    {{ field.label }}
+                    <div class="form-control">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <input class="btn btn-outline-primary" type="submit" value="Login">
+        </form>
+    </div>
+</div>
+<div>
+    
+</div>
+
+<script type="module" src="{% static 'js/main.js' %}" defer></script>
+{% endblock %}

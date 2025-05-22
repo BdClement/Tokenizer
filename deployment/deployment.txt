@@ -42,7 +42,9 @@ node_modules/ contient les librairies installées via npm. npm install permet a 
 ***** Librairie web3 *****
 
 Pour interagir avec la blockchain que ce soit dans mes tests ou mes scripts, j'utilise la librairie web3.js.
-Cette librairie est utilise par Truffle pour faciliter l'interaciton.
+Cette librairie est utilise par Truffle nativement pour faciliter l'interaciton. 
+
+Pour faire une Dapp et interagir avec la blockchain, ethers.js est une librairie web3 plmus moderne et orienté dev
 
 
 ***** Tests *****
@@ -138,6 +140,7 @@ Pour utiliser ce noeud, il faut installer hdwallet-provider et dotenv pour prote
 Pour la configuration d'un réseau, on peut spécifier soit host/port soit provider mais pas les 2.
 Pour s'assurer qu'un seul réseau est connecté a la fois, il faut set le provider comme une fucntion 
 
+
 ***** Script interagissant avec mes contrats *****
 
 Pour faire un scripts JavaScript qui interagit aves des contrats sur une blockchain publique
@@ -146,6 +149,24 @@ Sinon il aurait fallu faire un script brut hors Truffle et construire des instan
 ou encore signe des transaction directement avec signTransaction() ou sendSignedTransaction()
 Truffle simplifie les appels de function avec par exemple await contractInstance.methodName(args, { from })
 la ou j'aurais fait en web3 natif await contractInstance.methods.methodName(args).send({ from })
+
+
+***** Dapp *****
+se connecter avec son address (garder l'adresse en memoire cote front ?)
+Afficher ma balance d'EXT si connecté 
+envoyer des EXT a quelqu'un 
+approve + transferFrom (A reflechir)
+
+Le front etant deja en Vanilla JS, je reste la dessus pour simplifier mais faire une Dapp en React sera la prochaine étape.
+Pour gérer le rechargement de page pour la connection web3 coté front, je vais utiliser le localStroage du navigateur qui permet de stocker des données
+clés-valeurs et donc de conserver les données après un rechargement ou fermeture. Il stocke uniquement des string et s'utilise par exemple avec :
+- localStorage.setItem()
+- localStorage.getItem()
+- localStorage.removeItem()
+- localStorage.clear()
+
+Le localStroage est a mettre en comparaison avec le sessionStorage (present jusqu'a fermeture de l'onglet), les cookies etc..
+
 
 
 

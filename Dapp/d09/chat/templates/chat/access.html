@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Chat access</title>
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- <p>Page avec 3 liens ici qui menent vers des chatrooms</p> -->
+<div class="d-flex flex-column justify-content-center align-items-center">
+    {% if rooms %}
+        <p>Which room do you want to enter in ?</p>
+    {% else %}
+        <p>There is no avalibale room to enter in</p>
+    {% endif %}
+    <ul class="list-group">
+        {% for room in rooms %}
+        <li class="list-group-item list-group-item-dark">
+            <a class="link-dark link-underline-opacity-0" href="{% url 'chat:access_room' room.pk%}">{{ room.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

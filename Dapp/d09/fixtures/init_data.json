@@ -1,0 +1,77 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$NJI7FTTUcnaKD6DSGFmF3l$utnzRVlO9nwsXBKX7CaYKKyw225zUxdB8vTA6Wd+bF8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "alice",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-04-16T08:46:09.772Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$nI4UBu9gsJhdvvnpSAEaXt$J/PhqvASMPQ3S7TvKAejg2IeUsVHJyA97Dpv3n+8KpA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "karim",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-04-16T08:46:15.713Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$6zUYbHplE7S3BIWMsKga9P$a1Ngm+gpL2unc0KxrvY4wEta29SxKsVFOVSV8S5ER/E=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "amanda",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-04-16T08:46:22.754Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "chat.room",
+  "pk": 1,
+  "fields": {
+    "name": "TennisChat"
+  }
+},
+{
+  "model": "chat.room",
+  "pk": 2,
+  "fields": {
+    "name": "FootballChat"
+  }
+},
+{
+  "model": "chat.room",
+  "pk": 3,
+  "fields": {
+    "name": "CookingChat"
+  }
+}
+]
