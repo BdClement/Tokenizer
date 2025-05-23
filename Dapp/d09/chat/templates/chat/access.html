@@ -6,21 +6,20 @@
 
 {% block content %}
 
-{% if messages %}
+<!-- {% if messages %}
 <div class="message-container">
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
     {% endfor %}
 </div>
-{% endif %}
-<!-- <p>Page avec 3 liens ici qui menent vers des chatrooms</p> -->
-<div class="d-flex flex-column justify-content-center align-items-center">
+{% endif %} -->
+<div class=" container d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center">
     {% if rooms %}
-        <p>Which room do you want to enter in ?</p>
+        <h1 class="mt-5 mb-5">Which room do you want to enter in ?</h1>
     {% else %}
         <p>There is no avalibale room to enter in</p>
     {% endif %}
-    <ul class="list-group">
+    <ul class="list-group mt-3 mb-5">
         {% for room in rooms %}
         <li class="list-group-item list-group-item-dark">
             <a class="link-dark link-underline-opacity-0" href="{% url 'chat:access_room' room.pk%}">{{ room.name }}</a>

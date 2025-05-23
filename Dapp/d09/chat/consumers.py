@@ -19,7 +19,6 @@ class ChatConsumer(WebsocketConsumer):
         # Ajout du user connecte a mon set sur mon objet redis
         ChatConsumer.r.lpush(self.room_name, self.scope['user'].username)
         list_users = ChatConsumer.r.lrange(self.room_name, 0, -1)#liste du premier indice jusqu'au dernier
-        # print(f"connect list_users == {list_users}")
         self.accept()
 
         # Join the group
@@ -34,13 +33,11 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name, {"type": "user_connection", "message": "has joined the chat", "author": self.scope['user'].username}
             )
-        # print("Webscokcet accepted by Consumer")
 
     def disconnect(self, close_code):
         # Suppression du user dans redis
         ChatConsumer.r.lrem(self.room_name, 1, self.scope['user'].username)
         list_users = ChatConsumer.r.lrange(self.room_name, 0, -1)
-        # print(f"connect list_users == {list_users}")
         # mise a jour de la liste des users connectes
         async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name, {"type": "list_connected_users", "users_connected": list(set(list_users))}
@@ -53,7 +50,6 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name, self.channel_name
         )
-        # print("Webscokcet deconnection")
 
     def receive(self, text_data):
         # Creation d'un objet Message lie a la room
@@ -84,13 +80,11 @@ class ChatConsumer(WebsocketConsumer):
         message = event["message"]
         author = event["author"]
         type = event["type"]
-        print(event)
 
         self.send(text_data=json.dumps({"type": type, "message": message, "author": author}))
 
     def list_connected_users(self, event):
         type = event["type"]
         users_connected = event["users_connected"]
-        print(event)
 
         self.send(text_data=json.dumps({"type": type, "users_connected": users_connected}))

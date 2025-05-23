@@ -167,7 +167,8 @@ clés-valeurs et donc de conserver les données après un rechargement ou fermet
 
 Le localStroage est a mettre en comparaison avec le sessionStorage (present jusqu'a fermeture de l'onglet), les cookies etc..
 
-
+window.ethereum est un objet JavaScript injecté lors de l'installation de Rabby ou Metamask.
+ethers.js utilise window.ethereum pour communiquer avec un wallet
 
 
 

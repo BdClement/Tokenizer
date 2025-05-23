@@ -71,7 +71,7 @@ $(document).ready(function() {
         messageInputDom.val('');
     });
 
-    // Funciton to put the scroll down to see last messages
+    // Function to put the scroll down to see last messages
     // Appeler lors d'un message recu ou d'une connexion (donc au chargement de la page aussi)
     function scrollToBottom() {
         // scrollTop et scrollHeight sont des proprietés d'elem du Dom qui ont la propriete overlow

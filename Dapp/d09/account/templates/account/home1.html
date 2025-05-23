@@ -6,9 +6,18 @@
 {% endblock %}
 
 {% block content %}
-<main class="mt-auto mb-auto px-3">
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- <main class="mt-auto mb-auto px-3"> -->
+<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center">
     <h1>Ready for the jounrey ? Let's go</h1>
     <p>Welcome to an educational project that is going to lead you to web3 world</p>
     <p>Don't forget to share along the way</p>
+    <img class="img-fluid rounded shadow-sm mt-3" src="https://img.freepik.com/free-vector/blue-neon-geometric-shapes-vector-digital-technology_53876-111848.jpg?t=st=1747996444~exp=1748000044~hmac=bdac01741164d86917545baec659dee20def189f041884889eea9c0f2d4ef6b4&w=360" alt="web3">
 </main>
 {% endblock %}

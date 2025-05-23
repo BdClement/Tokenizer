@@ -12,7 +12,6 @@ def access_chatrooms(request):
     rooms = Room.objects.filter(
         Q(name='TennisChat') | Q(name='FootballChat') | Q(name='CookingChat')
     )
-    # print(f"rooms == {rooms}")
     return render(request, 'chat/access.html', {'rooms' : rooms})
 
 @method_decorator(login_required(login_url=reverse_lazy('account:home_page')), name='dispatch')
@@ -29,5 +28,4 @@ class RoomDetailView(DetailView):
         # Modifier pour les 3 derniers messages ?
         messages = room.room_messages.all()
         context['room_messages'] = messages
-        # print(f"Affichage de context === {context}")
         return context
