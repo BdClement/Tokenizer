@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Home Page</title>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<main class="m-5 h-100 container d-flex flex-column justify-content-center align-items-center text-center">
+    <h1 class="m-5">Welcome on your Web3 Portal</h1>
+    <div id="connect-display" class="p-5 m-5 container h-100 w-50 text-center d-flex flex-column flex-grow-1 justify-content-center border border-4 border-top-0 border-light border-opacity-10 rounded-bottom-3">
+        <h5 class="h-50">To explore web3 features, please connect your wallet</h5>
+        <a id="connect-wallet" class="btn btn-outline-light" href="{% url 'account:web3' %}">Connect Wallet</a>
+    </div>
+    <div id="disconnect-display" class="container h-100 w-50 text-center d-flex flex-column flex-grow-1 justify-content-center align-items-center border border-4 border-top-0 border-light border-opacity-10 rounded-bottom-3 d-none">
+        <div id="balance-display" class="container d-flex flex-grow-1 justify-content-center align-items-center">
+            <p class="lead mt-auto">$EXT balance : 100.000 EXT</p>
+        </div>
+        <div class="container d-flex flex-grow-1">
+            <div class="d-flex w-100 justify-content-center mt-auto ms-auto me-auto">
+                <a id="transfer" class="w-100 btn btn-outline-light btn-lg">Transfer</a>
+            </div>
+        </div>
+        <div class="container w-100 d-flex flex-grow-1">
+            <div class="mt-5 me-1 w-100">
+                <a id="approve" class="w-100 btn btn-outline-light btn-lg">Approve</a>
+            </div>
+            <div class="mt-5 ms-1 w-100">
+                <a id="transfer-from" class="w-100 btn btn-outline-light btn-lg">Transfer From</a>
+            </div>
+        </div>
+        <div class="mt-auto p-5">
+            <a id="disconnect-wallet" class="btn btn-outline-danger" href="{% url 'account:web3' %}">Disonnect Wallet</a>
+        </div>
+    </div>
+    <div id="form-display" class="container w-50 text-center d-flex flex-column flex-grow-1 justify-content-center align-items-center border border-4 border-top-0 border-light border-opacity-10 rounded-bottom-3 d-none">
+        <form id="form-event">
+        </form>
+    </div>
+</main>
+<script type="module" src="{% static 'js/init-wallet.js' %}"></script>
+<script type="module" src="{% static 'js/wallet.js' %}"></script>
+{% endblock %}

@@ -16,12 +16,14 @@
             <a class="nav-link d-flex align-items-center h-100" href="{% url 'account:login' %}">Login</a>
         </li>
         {% endif %}
-        <li class="nav-item d-flex align-items-center h-100">
+        <!-- <li class="nav-item d-flex align-items-center h-100">
             <a id="connect-wallet" class="nav-link d-flex align-items-center h-100" href="{% url 'account:home_page' %}">Connect Wallet</a>
         </li>
-        <li class="nav-item d-flex align-items-center h-100 d-none">
-            <a class="nav-link d-flex align-items-center h-100" href="{% url 'account:home_page' %}">Web3 features</a>
+        <li class="nav-item d-flex align-items-center h-100">
+            <a id="disconnect-wallet" class="nav-link d-flex align-items-center h-100 d-none" href="{% url 'account:home_page' %}">Disconnect Wallet</a>
+        </li> -->
+        <li class="nav-item d-flex align-items-center h-100">
+            <a id="web3-features" class="nav-link d-flex align-items-center h-100" href="{% url 'account:web3' %}">Web3 Portal</a>
         </li>
     </ul>
 </nav>
-<script type="module" src="{% static 'js/wallet.js' %}"></script>

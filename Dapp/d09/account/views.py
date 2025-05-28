@@ -48,3 +48,6 @@ class MyLogout(View):
 @ensure_csrf_cookie
 def csrf_token_view(request):
     return JsonResponse({'detail': 'CSRF token set'})
+
+def web3_features(request):
+    return render(request, "account/web3.html")
