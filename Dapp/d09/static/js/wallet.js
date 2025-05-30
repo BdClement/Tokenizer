@@ -2,10 +2,9 @@
 import { ethers } from "https://unpkg.com/ethers@5.7.2/dist/ethers.esm.min.js";//CDN non bloqué
 import { getAbi, getProvider, getContract, getReadOnlyContract } from "./init-wallet.js";
 
-// Affichage du solde 
-// Update balance - Function
-// Ecoute de l'event changement de compte via window.account
-// Gestion des entrées utilisateurs erreurs ??
+// Gestion des entrées utilisateurs erreurs ?? => redécouper plus proprement ?
+// faire et tester transaction
+// Ameliorer l'ux (alert..)
 
 console.log('ethers.js loaded');
 
@@ -22,20 +21,14 @@ $(document).ready(async function() {
     const walletDisconnection = $("#disconnect-wallet");
     const balanceDisplay = $("#balance-display");
 
-    // const web3Features = $("#web3-features");
     const formDisplay = $("#form-display");
     const formEvent = $("#form-event");
-    // formEvent.html(`<button type="submit">Transfer</button>`);
-    // console.log(`TEST form = ${formEvent}`);
 
     const transfer = $("#transfer");
     const approve = $("#approve");
     const transferFrom = $("#transfer-from");
 
-    // console.log(`TEST chargement script ${localStorage.getItem('userAddress')}`);
-    // localStorage.removeItem('userAddress');// A Supprimer
     if (localStorage.getItem('userAddress') !== null) {
-        // console.log('rentre dna le if null');
         disconnectDisplay.removeClass("d-none");
         connectDisplay.addClass("d-none");
         await updateBalance();
@@ -53,10 +46,8 @@ $(document).ready(async function() {
     }
 
     async function connectWallet() {
-        // abiTokenContract = getAbi();
         const provider = getProvider();
         const network = await provider.getNetwork();
-        // console.log(`TEST = ${network.chainId}`);
         if (network.chainId != BscTesnetChainId) {
             try {
                 //appel plus bas niveau qu'avec ethers.js
@@ -74,12 +65,6 @@ $(document).ready(async function() {
             localStorage.setItem('userAddress', resultAccounts[0]);
         }
         await updateBalance();
-        // const contract = getContract();
-        // const balanceExt = await contract.balanceOf(resultAccounts[0]);
-        // const humanBalance = ethers.utils.formatUnits(rawBalance, 3);
-        // localStorage.setItem('balance', ethers.utils.formatUnits(balanceExt, 3));
-        // balanceDisplay.html(`<p class="lead mt-auto">$EXT balance : ${localStorage.getItem('balance')} EXT</p>`);
-        // console.log(ethers.utils.formatUnits(balanceExt, 3));
         console.log(localStorage.getItem('balance'));
     }
     
@@ -87,7 +72,6 @@ $(document).ready(async function() {
         console.log('Appel a handleConnectWallet');
         event.preventDefault();
 
-        // Protection if userAddress is set dans LocalStorage
         if (localStorage.getItem('userAddress') !== null) {
             alert('A wallet is already connected. Disconnect wallet to connect an other one.');
         } 
@@ -96,7 +80,6 @@ $(document).ready(async function() {
                 await connectWallet();
                 connectDisplay.addClass("d-none");
                 disconnectDisplay.removeClass("d-none");
-                // web3Features.removeClass("d-none");
             } catch (error) {
                 alert(`Connect wallet error : ${error.message}`);
             }
@@ -106,15 +89,15 @@ $(document).ready(async function() {
         }
     }
 
-    function handleDisconnectWallet(event) {
-        event.preventDefault();
+    function handleDisconnectWallet(event = null) {
+        if (event) {
+            event.preventDefault();
+        }
         connectDisplay.removeClass("d-none");
         disconnectDisplay.addClass("d-none");
-        // web3Features.addClass("d-none");
 
         localStorage.removeItem('userAddress');
         localStorage.removeItem('balance');
-        // console.log(`TEST handleDisconnect ${localStorage.getItem('userAddress')}`);
     }
 
     function setForm(action) {
@@ -123,7 +106,9 @@ $(document).ready(async function() {
                 <fieldset class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
                     <legend class="m-3 ">Make a Transfer</legend>
                         <input type="text" class="form-control m-3" id="to" placeholder="To">
+                        <span id="to-error" class="d-none"></span>
                         <input type="text" class="form-control m-3" id="amount" placeholder="Amount">
+                        <span id="amount-error" class="d-none"></span>
                         <button type="submit" class="btn btn-primary m-3">Transfer</button>
                 </fieldset>`);
             formEvent.on("submit", handleTransfer);
@@ -131,8 +116,10 @@ $(document).ready(async function() {
             formEvent.html(`
                 <fieldset class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
                     <legend class="m-3 ">Make an Approval</legend>
-                    <input type="text" class="form-control m-3" id="spender" placeholder="Spender address">
+                    <input type="text" class="form-control m-3" id="to" placeholder="Spender address">
+                    <span id="to-error" class="d-none"></span>
                     <input type="text" class="form-control m-3" id="amount" placeholder="Amount">
+                    <span id="amount-error" class="d-none"></span>
                     <button type="submit" class="btn btn-primary m-3">Approve</button>
                 </fieldset>`);
             formEvent.on("submit", handleApprove);
@@ -141,8 +128,11 @@ $(document).ready(async function() {
                 <fieldset class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
                     <legend class="m-3 ">Make a Transfer from an address</legend>
                     <input type="text" class="form-control m-3" id="from" placeholder="From">
+                    <span id="from-error" class="d-none"></span>
                     <input type="text" class="form-control m-3" id="to" placeholder="To">
+                    <span id="to-error" class="d-none"></span>
                     <input type="text" class="form-control m-3" id="amount" placeholder="Amount">
+                    <span id="amount-error" class="d-none"></span>
                     <button type="submit" class="btn btn-primary m-3">TransferFrom</button>
                 </fieldset>`);
                 formEvent.on("submit", handleTransferFrom);
@@ -153,18 +143,54 @@ $(document).ready(async function() {
 
     function displayTransferForm(event) {
         console.log("TransferDisplay");
-        // Cacher Disconnect Display
         disconnectDisplay.addClass("d-none");
-        //Afficher form en attribuant la valeur de form en fonction de l'event
         setForm('transfer');
         formDisplay.removeClass('d-none');
     }
 
     async function handleTransfer(event) {
         event.preventDefault();
-        const to = $("#to").val();
-        const amount = ethers.utils.parseUnits($("#amount").val(), 3);
-        console.log(`L'adresse de destination est ${to} et le montant est ${amount}`);
+        // Check before TransactionIc
+        // const to = $("#to");
+        // const amount = $("#amount");
+        // const toError = $("#to-error");
+        // const amountError = $("#amount-error");
+        // toError.addClass("d-none");
+        // to.removeClass("is-invalid");
+        // amount.removeClass("is-invalid");
+        // amountError.addClass("d-none");
+
+        // const toValue = to.val().trim();
+        // const amountValue = ethers.utils.parseUnits(amount.val().trim(), 3);
+        // try {
+        //     if (!isValidAddress(toValue)) {
+        //         // throw Error('Invalid address');
+        //         to.addClass("is-invalid");
+        //         toError.text('Invalid address').removeClass("d-none").addClass("text-danger");
+        //         return ;
+        //     }
+        //     console.log(`test amont value = ${amount.val().trim()} et balance = ${Number(localStorage.getItem('balance'))}`);
+        //     const amountValue = ethers.utils.parseUnits(amount.val().trim(), 3);
+        //     console.log(amountValue);
+        //     if (amountValue.lt(0)) {
+        //         // throw Error('Amount must be postive');
+        //         // console.log('rentre dans le if');
+        //         amount.addClass("is-invalid");
+        //         amountError.text('Amount must be postive').removeClass("d-none").addClass("text-danger");
+        //         return;
+        //     }
+        //     else if (!amountValue.lte(Number(localStorage.getItem('balance')))) {
+        //         amount.addClass("is-invalid");
+        //         amountError.text('Insufficient funds').removeClass("d-none").addClass("text-danger");
+        //         return;
+        //     }
+        // } catch (error) {
+        //     console.log('Error : ', error.message);
+        //     amount.addClass("is-invalid");
+        //     amountError.text("Amount error : check amount, decimals").removeClass("d-none").addClass("text-danger");
+        // }
+        await handleFormError('transfer');
+        // console.log(`L'adresse de destination est ${toValue} et le montant est ${amount}`);
         
         // const contract = getContract();
         // const tx = await contract.transfer(to, amount);
@@ -172,8 +198,67 @@ $(document).ready(async function() {
         // alert("Transfer done!");
         //Gestion d'erreur ??
         //Changement d'affichage Réafficher diconnect et caché + Clear formEvent
-        // Update balance (in a function)
-        // await updateBalance();
+    }
+
+    function isValidAddress(address) {
+        return ethers.utils.isAddress(address);
+        // What is showError
+    }
+
+    async function handleFormError(form) {
+        //Logique globale
+        const to = $("#to");
+        const amount = $("#amount");
+        const toError = $("#to-error");
+        const amountError = $("#amount-error");
+        let balance = localStorage.getItem('balance');
+
+        toError.addClass("d-none");
+        to.removeClass("is-invalid");
+        amount.removeClass("is-invalid");
+        amountError.addClass("d-none");
+
+        //Logique TransferFrom
+        if (form === "transferFrom") {
+            const from = $("#from");
+            const fromError = $("#from-error");
+            from.removeClass("is-invalid");
+            fromError.addClass("d-none");
+            const fromValue = from.val().trim();
+            console.log(`transferFrom from = ${fromValue}`);
+            
+            if (!ethers.utils.isAddress(fromValue)){
+                from.addClass("is-invalid");
+                fromError.text('Invalid address').removeClass("d-none").addClass("text-danger");
+            } else {
+                const contract = getReadOnlyContract();
+                const balanceExt = await contract.balanceOf(fromValue);
+                balance = ethers.utils.formatUnits(balanceExt, 3);
+                console.log(`balance == ${balance}`);
+            }
+        }
+        const toValue = to.val().trim();
+        if (!ethers.utils.isAddress(toValue)) {
+            to.addClass("is-invalid");
+            toError.text('Invalid address').removeClass("d-none").addClass("text-danger");
+        }
+        try {
+                // console.log(`balance = ${balance} // amount = ${amount.val().trim()}`);
+                const balanceBN = ethers.utils.parseUnits(balance, 3);
+                const amountValue = ethers.utils.parseUnits(amount.val().trim(), 3);
+                if (amountValue.lt(0)) {
+                    amount.addClass("is-invalid");
+                    amountError.text('Amount must be postive').removeClass("d-none").addClass("text-danger");
+                }
+                else if (amountValue.gt(balanceBN)) {
+                    amount.addClass("is-invalid");
+                    amountError.text('Insufficient funds').removeClass("d-none").addClass("text-danger");
+                }
+            } catch (error) {
+            // console.log(`to = ${toValue}, amount = ${amount.val()}`);
+            amount.addClass("is-invalid");
+            amountError.text("Amount error : check amount, decimals").removeClass("d-none").addClass("text-danger");
+        }
     }
 
     function displayApproveForm(event) {
@@ -188,9 +273,10 @@ $(document).ready(async function() {
     async function handleApprove(event) {
         console.log("ApproveEvent");
         event.preventDefault();
-        const spender = $("#spender").val();
-        const amount = ethers.utils.parseUnits($("#amount").val(), 3);
-        console.log(`L'adresse du spender est ${spender} et le montant est ${amount}`);
+        // const spender = $("#to").val();
+        // const amount = ethers.utils.parseUnits($("#amount").val(), 3);
+        // console.log(`L'adresse du spender est ${spender} et le montant est ${amount}`);
+        await handleFormError('approve');
 
         // const contract = getContract();
         // const tx = await contract.approve(spender, amount);
@@ -212,10 +298,11 @@ $(document).ready(async function() {
     async function handleTransferFrom(event) {
         console.log("TransferFromEvent");
         event.preventDefault();
-        const from = $("#from").val();
-        const to = $("#to").val();
-        const amount = ethers.utils.parseUnits($("#amount").val(), 3);
-        console.log(`Le transfer est depuis ${from} à ${to} et le montant est ${amount}`);
+        // const from = $("#from").val();
+        // const to = $("#to").val();
+        // const amount = ethers.utils.parseUnits($("#amount").val(), 3);
+        // console.log(`Le transfer est depuis ${from} à ${to} et le montant est ${amount}`);
+        await handleFormError('transferFrom');
 
         // const contract = getContract();
         // const tx = await contract.transferFrom(from, to, amount);
@@ -223,8 +310,6 @@ $(document).ready(async function() {
         // alert('transferFrom done!');
         //Gestion d'erreur ??  
         //Changement d'affichage Réafficher diconnect et caché + Clear formEvent
-        // Update balance (in a function)
-        // await updateBalance();
     }
 
 
@@ -236,6 +321,15 @@ $(document).ready(async function() {
                 handleDisconnectWallet();
             } else {
                 localStorage.setItem('userAddress', accounts[0]);
+                await updateBalance();
+            }
+        });
+        // Other option : Listenning 'block' event from provider and check balance every block
+        const contract = getReadOnlyContract();
+        contract.on('Transfer', async (from, to, value, event) => {
+            console.log("Transfer event detected !");
+            const user = localStorage.getItem('userAddress');
+            if (from.toLowerCase() === user || to.toLowerCase() === user) {
                 await updateBalance();
             }
         });
