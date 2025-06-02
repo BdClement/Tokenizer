@@ -17,6 +17,11 @@ try {
     console.error("Contract init error : ", error);
 }
 
+async function updateWalletConnection() {
+    // Protect ??
+    await provider.send("eth_requestAccounts", []);
+}
+
 export function getAbi() {
     return abiTokenContract;
 }
@@ -30,7 +35,8 @@ export function getReadOnlyContract() {
 }
 
 // Need to be called when an account is present in window.ethereum
-export function getContract() {
+export async function getContract() {
+    await updateWalletConnection();
     // Necessite un signer pour utilise le contrat en écriture
     const signer = provider.getSigner();
     return new ethers.Contract(contractAddress, abiTokenContract, signer);

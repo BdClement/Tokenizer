@@ -14,7 +14,7 @@ def access_chatrooms(request):
     )
     return render(request, 'chat/access.html', {'rooms' : rooms})
 
-@method_decorator(login_required(login_url=reverse_lazy('account:home_page')), name='dispatch')
+@method_decorator(login_required(login_url=reverse_lazy('account:login')), name='dispatch')
 class RoomDetailView(DetailView):
     model = Room
     template_name = "chat/access_room.html"

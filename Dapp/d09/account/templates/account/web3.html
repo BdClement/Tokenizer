@@ -15,6 +15,15 @@
 {% endif %}
 <main class="m-5 h-100 container d-flex flex-column justify-content-center align-items-center text-center">
     <h1 class="m-5">Welcome on your Web3 Portal</h1>
+    <div class="toast-container position-fixed end-0" style="top: 10%">
+        <div id="toast" class="toast m-5" role="alert">
+            <div class="toast-header bg-dark text-white">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="toast-body" class="toast-body"></div>
+        </div>
+    </div>
     <div id="connect-display" class="p-5 m-5 container h-100 w-50 text-center d-flex flex-column flex-grow-1 justify-content-center border border-4 border-top-0 border-light border-opacity-10 rounded-bottom-3">
         <h5 class="h-50">To explore web3 features, please connect your wallet</h5>
         <a id="connect-wallet" class="btn btn-outline-light" href="{% url 'account:web3' %}">Connect Wallet</a>
