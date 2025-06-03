@@ -204,10 +204,4 @@ Explain choices in README :
     - Solidity 
     - BEP20 standard in EIP ?
 
-code/ avec commentaires !
 Demonstration de l'utilisation du token => Tests + Script js + Dapp
-Define Ticker and publish it on BscScan ? MENTION smart contract address and network used 
-Clear understanding of how the token will work
-
-Error: not found node_modules/@openzeppelin/contracts/finance/VestingWallet.sol
-
