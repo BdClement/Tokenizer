@@ -44,7 +44,9 @@ Command to test :
 truffle test
 ```
 
-![Test example](documentation/)
+![Test example](documentation/Test1.png)
+
+![Test example](documentation/Test2.png)
 
 
 ## Token 🪙
