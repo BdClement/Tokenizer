@@ -171,6 +171,25 @@ window.ethereum est un objet JavaScript injecté lors de l'installation de Rabby
 ethers.js utilise window.ethereum pour communiquer avec un wallet
 
 
+***** Verification du contrat par l'explorer *****
+
+Lorque l'on déploie un smart contract sur lma blockchain, suel le bytecode est visible sur la blockchain. C'est illisible.
+Verifier le contrat par un explorer permet de publier le code source lisible et compréhensible sur l'explorer de manière publique et transparente.
+Cela rassure les utilisateurs.
+
+Pour faire cela, il existe 3 méthode principales :
+- Manuelle sur l'explorer (interface Web) : C'est compliqué si le contrat a divers import puisqu'il faut copier manuellement tous les fichiers en respectant les bons noms.
+- Automatisé avec Hardhat/Truffle et API BscScan : C'est la méthode la plus propre. Il faut crée une clé API sur l'explorer, configurer Harhat pour utiliser cette clé api et utiliser
+    require("@nomicfoundation/hardhat-toolbox") avec "npx hardhat verify --network bscTestnet 0xADRESSE_CONTRAT "argument1" "argument2" "
+- Avec Remix IDE : Il faut télécharger le fichier Standard JSON Input 
+
+J'ai utilisé Truffle avec son plugin "'truffle-plugin-verify'" et sa commande "truffle run verify Token42  --network bscTestnet"
+Concrètement Truffle utilise le fichier json dans build/contracts/ concernant la dernère instance du contrat Token42 deployé
+L'explorer recompilera le code source avec les memes paramètres et verifie que le bytecode compilé correspond au bytecode déployé sur la blockchain.
+D'ou l'interet de l'utilisation des framework comme Truffle et Harhdat.
+
+La verification du contrat ne veut pas dire que le contrat est Safe, cela signifie simplement que le code source est auditable par tous.
+
 
 ***** A Faire *****
 
@@ -189,4 +208,6 @@ code/ avec commentaires !
 Demonstration de l'utilisation du token => Tests + Script js + Dapp
 Define Ticker and publish it on BscScan ? MENTION smart contract address and network used 
 Clear understanding of how the token will work
+
+Error: not found node_modules/@openzeppelin/contracts/finance/VestingWallet.sol
 

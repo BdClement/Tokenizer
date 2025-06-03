@@ -4,15 +4,20 @@
 This project focuses on the creation of a BEP-20 token.
 
 ## Network 🌐
-I chose to use the BNB Smart Chain Testnet, which I had to manually add to my Rabby Wallet.
+I chose to use the BNB Smart Chain Testnet, which I had to manually add to my Rabby Wallet. 
+
+BNB Smart Chain Testnet is the official test version of BSC and it is compatible with a lot of tools such as Truffle, Alchemy services..
 
 To interact with this network and pay transaction gas fees, I needed tBNB (the testnet version of BNB). I obtained this via a faucet available on the BNB Discord server.
 
 ## Programming language 💻
-I used Solidity to write the smart contract, as the BSC is EVM-compatible and Solidity is the primary programming language for developing smart contract.
+I used Solidity to write the smart contract, as the BSC is EVM-compatible.
+
+Solidity is the primary programming language for developing smart contract, and is well documented.
 
 ## Web3 Framework Platfrom 🧰
 I chose Truffle as the Web3 framework for this project. Having previously worked with Hardhat and Remix, I wanted to explore Truffle's features.
+Truffle handles the complete cycle with compilation, migration, deployment, tests and interaction.
 Truffle is a node.js based development framework for Ethereum-compatible blockchains that:
 - Manages smart contract deployment with a migration system
 - Supports JavaScript or Solidity-based testing using Mocha and Chai
@@ -31,7 +36,7 @@ To interact with a Blockchain, we need to have access to a blockchain Node.
 
 I chose to use Alchemy, a blockchain node provider that simplifies access to various blockchain networks. 
 
-Alchemy handles node infrastructure, allowing developers to focus on building DApps without managing their own nodes.
+Alchemy handles node infrastructure, allowing developers to focus on building DApps without managing their own nodes. It handles a lot of networks including BSCTestnet.
 
 In this project, I configured the Truffle settings (truffle-config.js) to use the Alchemy RPC endpoint for the BNB Smart Chain Testnet.
 
@@ -91,7 +96,7 @@ https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP20.md
 
 Network used : 
 - BNB Smart Chain Testnet (ChainID 97, Currency tBNB)
-Token contract : 
+- Token contract : 
 ```plaintext
     0x21eA36E6120eEcfd62569B2a7e0201350473Ea55
 ```

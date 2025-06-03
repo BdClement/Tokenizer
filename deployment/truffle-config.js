@@ -4,6 +4,7 @@ require('dotenv').config();// Pour utiliser un .env
 const owner_private_key = process.env.PRIVATE_KEY;
 const team_private_key = process.env.TEAM_PRIVATE_KEY;
 const endpoint_alchemy = process.env.ENDPOINT_ALCHEMY_TESTNET;
+const api_key = process.env.BSCSCAN_API_KEY;
 
 console.log(endpoint_alchemy);
 /**
@@ -64,7 +65,12 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    bscscan: api_key
+  },  
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.

@@ -20,6 +20,7 @@
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.16",
     "chai-as-promised": "^8.0.1",
-    "chai-bn": "^0.3.1"
+    "chai-bn": "^0.3.1",
+    "truffle-plugin-verify": "^0.6.7"
   }
 }
