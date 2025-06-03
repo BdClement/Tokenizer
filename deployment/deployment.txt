@@ -175,7 +175,18 @@ ethers.js utilise window.ethereum pour communiquer avec un wallet
 ***** A Faire *****
 
 - Documenter documentation/ avec whitepaper [ À FINALISER ]
-- Deploiement des smart contracts. MultiSig contract, Token42 contract + Documenter 
-- Script qui prouve les fonctionnalités (quel langage, librairires web3)
-- Penser au site vitrine et preuve de MultiSig ?? 
 - Finir README
+
+
+Name of token : EXTEND42
+Explain choices in README :
+    - Truffle => Javascript
+    - BSC Testnet
+    - Solidity 
+    - BEP20 standard in EIP ?
+
+code/ avec commentaires !
+Demonstration de l'utilisation du token => Tests + Script js + Dapp
+Define Ticker and publish it on BscScan ? MENTION smart contract address and network used 
+Clear understanding of how the token will work
+
