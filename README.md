@@ -44,6 +44,8 @@ Command to test :
 truffle test
 ```
 
+![Test example](documentation/)
+
 
 ## Token 🪙
 EXTEND42 token aims to grow as the project progresses to educate its community on the life cycle of a web3 project. 
