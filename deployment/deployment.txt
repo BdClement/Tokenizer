@@ -49,7 +49,7 @@ node_modules/ contient les librairies installées via npm. npm install permet a 
 Pour interagir avec la blockchain que ce soit dans mes tests ou mes scripts, j'utilise la librairie web3.js.
 Cette librairie est utilise par Truffle nativement pour faciliter l'interaciton. 
 
-Pour faire une Dapp et interagir avec la blockchain, ethers.js est une librairie web3 plmus moderne et orienté dev
+Pour faire une Dapp et interagir avec la blockchain, ethers.js est une librairie web3 plus moderne et orienté dev
 
 
 ***** Tests *****
@@ -83,16 +83,6 @@ Des lors que le plugin est installé, on peut importer dans les fichiers de test
 On a besoin d'un plugin comme chai-as-promised pour tester les reverts 
 On pourrait cependant tester via des try and catch mais c'est moins propre
 
-
-***** JS rappel *****
-
-Declarer une function simple function nom() { ... }
-Déclarer une function fléché const f = (x) => x * 2;
-Gérer une promesse const result = await appelAsync();
-Test fucntion dans Mocha it('description', async function() { ... });
-
-
-***** Questions *****
 
 ***** Astuces *****
 Pour éviter d'engorger le réseau avec enormément d'instance d'un smart contract on peut utiliser selfdestruct en prévoyant une fonction dans le smart contract 
@@ -157,10 +147,6 @@ la ou j'aurais fait en web3 natif await contractInstance.methods.methodName(args
 
 
 ***** Dapp *****
-se connecter avec son address (garder l'adresse en memoire cote front ?)
-Afficher ma balance d'EXT si connecté 
-envoyer des EXT a quelqu'un 
-approve + transferFrom (A reflechir)
 
 Le front etant deja en Vanilla JS, je reste la dessus pour simplifier mais faire une Dapp en React sera la prochaine étape.
 Pour gérer le rechargement de page pour la connection web3 coté front, je vais utiliser le localStroage du navigateur qui permet de stocker des données
@@ -195,10 +181,3 @@ D'ou l'interet de l'utilisation des framework comme Truffle et Harhdat.
 
 La verification du contrat ne veut pas dire que le contrat est Safe, cela signifie simplement que le code source est auditable par tous.
 
-
-***** A Faire *****
-
-- Documenter documentation/ avec whitepaper [ À FINALISER ]
-- Finir README
-
-Demonstration de l'utilisation du token => Tests + Script js + Dapp
