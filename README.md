@@ -81,7 +81,7 @@ Network used :
 https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP20.md
 
 
-## 👨‍💻 Dapp to interact with my smart contract token
+## Dapp to interact with my smart contract token 👨‍💻
 
 Here a small project (back-end oriented) to interact with the smart contract. This app allows user to :
 - Login/logout
