@@ -3,6 +3,8 @@
 ## Overview 🧾
 This project focuses on the creation of a BEP-20 token.
 
+The main goals are to dig blockchain technology, understand and know how to implment smart contracts, Dapp, understand web3 projects.
+
 ## Network 🌐
 I chose to use the BNB Smart Chain Testnet, which I had to manually add to my Rabby Wallet. 
 
@@ -44,9 +46,9 @@ In this project, I configured the Truffle settings (truffle-config.js) to use th
 Unit and integration tests have been made in the Truffle test section.
 These tests used Mocha (JavaScript test framework), Chai (assertion library) and @openzeppelin/test-helpers (test library)
 
-Command to test : 
+Command to test (install dependencies with npm install): 
 ```bash
-truffle test
+npx truffle test
 ```
 
 ![Test example](documentation/Test1.png)
@@ -67,39 +69,31 @@ The community will have an important role in the direction the project takes: it
 
 To summarize, the token and the privileges will go in the direction of the community's choices which will allow it to understand the problems of a decentralized project.
 
-
-## BEP-20 Standard 📘
-BEP-20 is a token standard used on the Binance Smart Chain (BSC), similar to Ethereum's ERC-20. It defines a set of rules that fungible tokens must follow to function properly on the BSC.
-
-The main goals of this standard are make easy the token creation compatible with the Binance Smart Chain, ensure interoperability with BSC tools, wallets, DApps, decentralized platforms and provide a familiar framework for Ethereum developers to create token on BSC.
-
-BEP-20 tokens are ERC-20 compatible, cheaper to launch than ERC-20 thanks to low gas cost on BSC.
-The differences between Ethereum network and Binance Smart chain are gas cost, speed execution, ecosystems, security.
-
-To meet BEP-20 standard, token smart contract muser include at least these functions :
-- function name() public view returns (string)
-- function symbol() public view returns (string)
-- function decimals() public view returns (uint8)
-- function totalSupply() public view returns (uint256)
-- function balanceOf(address account) public view returns (uint256)
-- function transfer(address recipient, uint256 amount) public returns (bool)
-- function allowance(address owner, address spender) public view returns (uint256)
-- function approve(address spender, uint256 amount) public returns (bool)
-- function transferFrom(address sender, address recipient, uint256 amount) public returns (bool)
-
-These events :
-- event Transfer(address indexed from, address indexed to, uint256 value);
-- event Approval(address indexed owner, address indexed spender, uint256 value);
-
-https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP20.md
-
-
 Network used : 
 - BNB Smart Chain Testnet (ChainID 97, Currency tBNB)
 - Token contract : 
 ```plaintext
     0x21eA36E6120eEcfd62569B2a7e0201350473Ea55
 ```
+
+## BEP-20 Standard documentation 📘
+
+https://github.com/bnb-chain/BEPs/blob/master/BEPs/BEP20.md
+
+
+## 👨‍💻 Dapp to interact with my smart contract token
+
+Here a small project (back-end oriented) to interact with the smart contract. This app allows user to :
+- Login/logout
+- Chat in real time with other user using WebSockets
+- Interact with my token smart contrat to use basics features such as see balance in real time, transfer, approve and transfer From
+
+### Dapp stack
+- Front-end : HTML, Bootstrap, JavaScript (jQuery)
+- Back-end : Python / Django
+- Web3 : ethers.js
+
+![Demo Dapp](documentation/Dapp.gif)
 
 
 ## Bonus - MultiSig 🔐

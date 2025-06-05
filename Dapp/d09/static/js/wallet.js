@@ -29,10 +29,15 @@ $(document).ready(async function() {
     
     async function updateBalance() {
         const user = localStorage.getItem('userAddress');
+        console.log('getUser in update');
         if (user !== null) {
+            console.log(' in update in if');
             const contract = getReadOnlyContract();
+            console.log('getcontractReadOnly in update');
             const balanceExt = await contract.balanceOf(user);
+            console.log('getBalance in update');
             const amount = ethers.utils.formatUnits(balanceExt, 3);
+            console.log('getformatUnits in update');
             localStorage.setItem('balance', amount);
             balanceDisplay.html(`<p class="lead mt-auto">$EXT balance : ${amount} EXT</p>`);
         }

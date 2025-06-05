@@ -24,6 +24,8 @@ npm install ganache@7.9.1 : installer une version de ganache propre au projet
 truffle init : initialise un projet truffle
 truflle compile : compile les smart-contracts
 
+npm install : installe les dependances presentes dans package.json
+
 npm install @openzeppelin/contracts
 npm install --save-dev chai-bn
 npm install --save-dev chai-as-promised
@@ -33,6 +35,9 @@ npm install dotenv
 
 truffle migrate --f 3 --to 3  --network bscTestnet [ deployer uniquement la 3e migrations ]
  npx truffle exec scripts/interact.js --network bscTestnet
+ npx truffle compile 
+
+
 
 rappel :
 package.json est la liste des dépendances du projet 
@@ -195,13 +200,5 @@ La verification du contrat ne veut pas dire que le contrat est Safe, cela signif
 
 - Documenter documentation/ avec whitepaper [ À FINALISER ]
 - Finir README
-
-
-Name of token : EXTEND42
-Explain choices in README :
-    - Truffle => Javascript
-    - BSC Testnet
-    - Solidity 
-    - BEP20 standard in EIP ?
 
 Demonstration de l'utilisation du token => Tests + Script js + Dapp
